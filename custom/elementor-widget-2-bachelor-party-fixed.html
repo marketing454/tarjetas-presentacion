@@ -1,0 +1,608 @@
+<!-- ============================================================
+     WIDGET 2 - DESPUES DEL SHORTCODE
+     CLASSY CARTAGENA - Bachelor Party
+     Pegar en el SEGUNDO widget HTML de Elementor,
+     justo debajo del widget Shortcode [pricing_luxury_yohan].
+     ============================================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+@font-face {
+  font-family: 'AB Channel';
+  src: url('/wp-content/uploads/fonts/ABChanel-Corpo-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.cc-bp{
+  --gold:#CFBE67;
+  --gold-soft:rgba(207,190,103,0.14);
+  --bg:#FFFFFF;
+  --bg-alt:#FAFAF7;
+  --bg-card:#FFFFFF;
+  --bg-hover:#F5F4EF;
+  --ink:#1A1814;
+  --ink-65:rgba(26,24,20,0.62);
+  --ink-40:rgba(26,24,20,0.42);
+  --ink-15:rgba(26,24,20,0.12);
+  --ink-08:rgba(26,24,20,0.06);
+  --border:rgba(26,24,20,0.08);
+  --ff-h:'AB Channel','Times New Roman',serif;
+  --ff-b:'Lexend',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--ff-b);
+  font-weight:300;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+.cc-bp *,
+.cc-bp *::before,
+.cc-bp *::after{box-sizing:border-box;margin:0;padding:0;}
+
+.cc-bp h1,.cc-bp h2,.cc-bp h3{
+  font-family:var(--ff-h);
+  font-weight:normal;
+  letter-spacing:0.04em;
+  color:var(--ink);
+}
+.cc-bp h2{font-size:clamp(1.8rem,4vw,3.2rem);line-height:1.08;max-width:760px;}
+.cc-bp h3{font-size:clamp(1.1rem,2vw,1.6rem);line-height:1.2;}
+.cc-bp p{font-size:0.875rem;font-weight:300;color:var(--ink-65);line-height:1.85;}
+.cc-bp strong{font-weight:500;color:var(--ink);}
+.cc-bp .cc-gold{color:var(--gold);}
+.cc-bp .cc-label{
+  display:inline-block;
+  font-family:var(--ff-b);
+  font-size:0.6rem;
+  font-weight:500;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+.cc-bp .cc-divider{width:44px;height:1px;background:var(--gold);margin:1.1rem 0;}
+.cc-bp .cc-divider--c{margin:1.1rem auto;}
+.cc-bp .cc-wrap{max-width:1200px;margin:0 auto;padding:0 2rem;}
+.cc-bp .cc-wrap--n{max-width:860px;margin:0 auto;padding:0 2rem;}
+.cc-bp section{padding:5.5rem 0;}
+
+.cc-bp .cc-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.6rem;
+  min-height:46px;
+  font-family:var(--ff-b);
+  font-size:0.65rem;
+  font-weight:500;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  text-decoration:none;
+  padding:0.9rem 2.2rem;
+  border:1px solid var(--ink);
+  color:var(--ink);
+  background:transparent;
+  cursor:pointer;
+  transition:all 0.25s ease;
+  position:relative;
+  overflow:hidden;
+}
+.cc-bp .cc-btn::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:var(--ink);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform 0.25s ease;
+  z-index:0;
+}
+.cc-bp .cc-btn:hover::after{transform:scaleX(1);}
+.cc-bp .cc-btn:hover{color:#FFFFFF;}
+.cc-bp .cc-btn span,.cc-bp .cc-btn svg{position:relative;z-index:1;}
+.cc-bp .cc-btn--s{background:var(--gold);color:#1A1814;border-color:var(--gold);}
+.cc-bp .cc-btn--s::after{background:var(--ink);}
+.cc-bp .cc-btn--s:hover{color:#FFFFFF;}
+
+/* VIDEO */
+.cc-bp .cc-video-section{
+  background:var(--bg-alt);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:5rem 0;
+}
+.cc-bp .cc-video-inner{
+  display:grid;
+  grid-template-columns:minmax(0,0.95fr) minmax(300px,1.05fr);
+  gap:clamp(2.5rem,5vw,5rem);
+  align-items:center;
+}
+.cc-bp .cc-video-frame{
+  display:flex;
+  justify-content:center;
+  min-width:0;
+}
+.cc-bp .cc-video-phone{
+  position:relative;
+  width:min(360px,100%);
+  aspect-ratio:9/16;
+  border:8px solid var(--ink);
+  border-radius:34px;
+  overflow:hidden;
+  background:#000;
+  box-shadow:0 28px 70px rgba(26,24,20,0.22);
+}
+.cc-bp .cc-video-phone::before{
+  content:'';
+  position:absolute;
+  top:10px;
+  left:50%;
+  width:74px;
+  height:5px;
+  border-radius:999px;
+  transform:translateX(-50%);
+  background:rgba(255,255,255,0.28);
+  z-index:2;
+  pointer-events:none;
+}
+.cc-bp .cc-video-phone iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+  display:block;
+}
+.cc-bp .cc-video-specs{
+  display:grid;
+  gap:0.75rem;
+  margin-top:2rem;
+}
+.cc-bp .cc-video-spec{
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
+  font-size:0.8rem;
+  color:var(--ink-65);
+}
+.cc-bp .cc-video-spec svg{width:16px;height:16px;color:var(--ink);flex-shrink:0;}
+
+/* INCLUDED */
+.cc-bp .cc-inc__grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  margin-top:3.5rem;
+}
+.cc-bp .cc-inc{
+  background:var(--bg-card);
+  padding:2.35rem 1.75rem;
+  display:flex;
+  flex-direction:column;
+  gap:1.05rem;
+  min-width:0;
+  transition:background 0.25s;
+}
+.cc-bp .cc-inc:hover{background:var(--bg-hover);}
+.cc-bp .cc-inc__icon{
+  width:48px;
+  height:48px;
+  border:1px solid var(--ink-15);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--ink);
+}
+.cc-bp .cc-inc__icon svg{width:22px;height:22px;}
+.cc-bp .cc-inc__num{font-family:var(--ff-h);font-size:3.5rem;color:rgba(26,24,20,0.08);line-height:1;}
+.cc-bp .cc-inc__title{
+  min-height:2.6em;
+  font-size:0.68rem;
+  font-weight:500;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.cc-bp .cc-inc__link{
+  font-size:0.7rem;
+  color:var(--gold);
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  gap:0.4rem;
+  margin-top:auto;
+}
+.cc-bp .cc-inc__link svg{width:11px;height:11px;flex-shrink:0;}
+
+/* ITINERARY */
+.cc-bp .cc-itin{background:var(--bg);}
+.cc-bp .cc-itin__hdr{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(340px,0.92fr);
+  border:1px solid var(--border);
+  border-bottom:none;
+}
+.cc-bp .cc-itin__hdr-img{
+  width:100%;
+  height:100%;
+  min-height:360px;
+  object-fit:cover;
+  display:block;
+}
+.cc-bp .cc-itin__hdr-text{
+  padding:clamp(2.25rem,5vw,3.5rem);
+  background:var(--bg-card);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.cc-bp .cc-days{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  border-top:none;
+}
+.cc-bp .cc-day{
+  background:var(--bg-card);
+  padding:2rem 1.55rem;
+  min-width:0;
+  transition:background 0.25s;
+}
+.cc-bp .cc-day:hover{background:var(--bg-hover);}
+.cc-bp .cc-day__hdr{
+  display:flex;
+  align-items:center;
+  gap:0.7rem;
+  min-height:70px;
+  margin-bottom:1.2rem;
+  padding-bottom:1rem;
+  border-bottom:1px solid var(--border);
+}
+.cc-bp .cc-day__icon{
+  width:34px;
+  height:34px;
+  border:1px solid var(--ink-15);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--ink);
+  flex-shrink:0;
+}
+.cc-bp .cc-day__icon svg{width:15px;height:15px;}
+.cc-bp .cc-day__num{
+  font-size:0.57rem;
+  font-weight:500;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--ink-40);
+  display:block;
+}
+.cc-bp .cc-day__title{font-family:var(--ff-h);font-size:1.08rem;color:var(--ink);line-height:1.2;}
+.cc-bp .cc-day ul{list-style:none;}
+.cc-bp .cc-day ul li{
+  font-size:0.76rem;
+  font-weight:300;
+  color:var(--ink-65);
+  padding:0.42rem 0;
+  border-bottom:1px solid var(--ink-08);
+  display:flex;
+  gap:0.55rem;
+  align-items:flex-start;
+}
+.cc-bp .cc-day ul li:last-child{border-bottom:none;}
+.cc-bp .cc-day ul li::before{content:'-';color:var(--ink-40);flex-shrink:0;font-size:0.68rem;}
+
+/* STEPS */
+.cc-bp .cc-steps{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  margin-top:3.5rem;
+}
+.cc-bp .cc-step{
+  background:var(--bg-card);
+  padding:2.35rem 1.75rem;
+  min-width:0;
+  transition:background 0.25s;
+}
+.cc-bp .cc-step:hover{background:var(--bg-hover);}
+.cc-bp .cc-step__num{font-family:var(--ff-h);font-size:3.8rem;color:rgba(26,24,20,0.10);line-height:1;margin-bottom:1rem;}
+.cc-bp .cc-step__icon{
+  width:42px;
+  height:42px;
+  border:1px solid var(--ink-15);
+  margin-bottom:1.2rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--ink);
+}
+.cc-bp .cc-step__icon svg{width:19px;height:19px;}
+.cc-bp .cc-step__title{
+  font-size:0.67rem;
+  font-weight:500;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--ink);
+  margin-bottom:0.55rem;
+}
+
+/* CTA */
+.cc-bp .cc-cta{
+  background:var(--bg-alt);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:5.5rem 0;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.cc-bp .cc-cta::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:url('https://classycartagena.com/wp-content/uploads/2022/04/Bachelor-Party-Elite-Classy-Cartagena.jpg') center/cover no-repeat;
+  opacity:0.04;
+}
+.cc-bp .cc-cta__inner{position:relative;z-index:1;}
+.cc-bp .cc-cta__inner h2{margin-left:auto;margin-right:auto;margin-bottom:0.5rem;}
+.cc-bp .cc-cta__inner>p{max-width:480px;margin:0 auto 2.5rem;}
+.cc-bp .cc-cta__btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.cc-bp .cc-contacts{
+  display:inline-flex;
+  max-width:100%;
+  border:1px solid var(--border);
+  margin-top:2.5rem;
+}
+.cc-bp .cc-contact{padding:1.2rem 1.8rem;border-right:1px solid var(--border);min-width:0;}
+.cc-bp .cc-contact:last-child{border-right:none;}
+.cc-bp .cc-contact__lbl{
+  font-size:0.57rem;
+  font-weight:500;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--ink-40);
+  display:block;
+  margin-bottom:0.3rem;
+}
+.cc-bp .cc-contact a{
+  font-family:var(--ff-h);
+  font-size:1.05rem;
+  color:var(--ink);
+  text-decoration:none;
+  overflow-wrap:anywhere;
+}
+.cc-bp .cc-contact a:hover{color:var(--gold);}
+
+@media(max-width:1024px){
+  .cc-bp .cc-video-inner{grid-template-columns:1fr;gap:2.75rem;}
+  .cc-bp .cc-video-frame{order:-1;}
+  .cc-bp .cc-inc__grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .cc-bp .cc-itin__hdr{grid-template-columns:1fr;}
+  .cc-bp .cc-days{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .cc-bp .cc-steps{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:640px){
+  .cc-bp section{padding:4rem 0;}
+  .cc-bp .cc-wrap,.cc-bp .cc-wrap--n{padding:0 1.15rem;}
+  .cc-bp h2{font-size:1.75rem;}
+  .cc-bp .cc-video-section{padding:3.5rem 0;}
+  .cc-bp .cc-video-phone{width:min(305px,100%);border-width:6px;border-radius:28px;}
+  .cc-bp .cc-inc__grid,
+  .cc-bp .cc-days,
+  .cc-bp .cc-steps{grid-template-columns:1fr;margin-top:2.3rem;}
+  .cc-bp .cc-inc__title{min-height:0;}
+  .cc-bp .cc-itin__hdr-img{min-height:240px;}
+  .cc-bp .cc-btn{width:100%;padding-left:1rem;padding-right:1rem;}
+  .cc-bp .cc-cta__btns{display:grid;grid-template-columns:1fr;}
+  .cc-bp .cc-contacts{display:flex;flex-direction:column;border:none;gap:1px;background:var(--border);}
+  .cc-bp .cc-contact{border-right:none;background:var(--bg-alt);padding:1.1rem 1rem;}
+}
+</style>
+
+<div class="cc-bp">
+  <section class="cc-video-section">
+    <div class="cc-wrap">
+      <div class="cc-video-inner">
+        <div class="cc-video-text">
+          <span class="cc-label">Bachelor Party Preview</span>
+          <div class="cc-divider"></div>
+          <h2>See the Cartagena Weekend Before You Book It</h2>
+          <p style="margin-top:1rem;">A fast look at the villa, yacht day, nightlife and concierge experience your group can expect in Cartagena.</p>
+          <div class="cc-video-specs">
+            <div class="cc-video-spec">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+              Private luxury villas with staff
+            </div>
+            <div class="cc-video-spec">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 17l3.5-9.5A2 2 0 018.4 6H18a2 2 0 011.9 2.6L17 17H3z"/></svg>
+              Yacht day to Cholón and Rosario Islands
+            </div>
+            <div class="cc-video-spec">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/></svg>
+              VIP nightlife, bottle service and concierge
+            </div>
+          </div>
+        </div>
+        <div class="cc-video-frame">
+          <div class="cc-video-phone">
+            <iframe src="https://player.vimeo.com/video/793717004?background=1&amp;autoplay=1&amp;muted=1&amp;loop=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;dnt=1" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Bachelor Party Package"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="cc-wrap">
+      <span class="cc-label">Every Package</span>
+      <div class="cc-divider"></div>
+      <h2>What's Included in Every Bachelor Package</h2>
+      <div class="cc-inc__grid">
+        <div class="cc-inc">
+          <div class="cc-inc__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <div class="cc-inc__num">01</div>
+          <div class="cc-inc__title">Luxury Villa with Full Staff</div>
+          <p>Private pool, rooftop terrace, gourmet kitchen. Daily housekeeping. Options from 4 to 22 guests in the Old City and Bocagrande.</p>
+          <a href="https://classycartagena.com/luxury-villas-in-cartagena-colombia/8-rooms-vacations-rental/" class="cc-inc__link">View 8+ bedroom villas <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+        <div class="cc-inc">
+          <div class="cc-inc__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 17l3.5-9.5A2 2 0 018.4 6H18a2 2 0 011.9 2.6L17 17H3z"/></svg></div>
+          <div class="cc-inc__num">02</div>
+          <div class="cc-inc__title">Private Yacht Day Charter</div>
+          <p>50ft to 85ft vessels. Full crew, open bar, catering. Cholón, Rosario Islands, and Playa Blanca - the best Caribbean anchorages.</p>
+          <a href="https://classycartagena.com/boats-rental-in-cartagena/yacht-rentals-cartagena/" class="cc-inc__link">View yacht charters <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+        <div class="cc-inc">
+          <div class="cc-inc__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13M9 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm12-2c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2z"/></svg></div>
+          <div class="cc-inc__num">03</div>
+          <div class="cc-inc__title">VIP Nightlife &amp; Bottle Service</div>
+          <p>Reserved tables at Cartagena's top venues. Skip-the-line access and dedicated bottle service host for the crew.</p>
+          <a href="https://classycartagena.com/night-life-in-cartagena/" class="cc-inc__link">View nightlife options <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+        <div class="cc-inc">
+          <div class="cc-inc__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="cc-inc__num">04</div>
+          <div class="cc-inc__title">24/7 Concierge &amp; Security</div>
+          <p>Bilingual concierge from wheels-down to departure. Elite bodyguard services for high-profile groups and corporate executives.</p>
+          <a href="https://classycartagena.com/elite-bodyguard-services-in-cartagena-and-medellin/" class="cc-inc__link">View bodyguard services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cc-itin">
+    <div class="cc-wrap">
+      <div class="cc-itin__hdr">
+        <img class="cc-itin__hdr-img" src="https://classycartagena.com/wp-content/uploads/2022/04/Bachelor-Party-Elite-Classy-Cartagena.jpg" alt="Bachelor party sunset on yacht Cartagena" loading="lazy" width="1200" height="525">
+        <div class="cc-itin__hdr-text">
+          <span class="cc-label">Sample Weekend</span>
+          <div class="cc-divider"></div>
+          <h2>A Sample Bachelor Weekend Itinerary in Cartagena</h2>
+          <p style="margin-top:1rem;">Every trip is tailor-made. This is a proven framework - your concierge customizes every hour around the crew.</p>
+          <div style="margin-top:2rem;"><a href="https://wa.me/573043328515" class="cc-btn" target="_blank" rel="noopener"><span>Plan My Itinerary</span></a></div>
+        </div>
+      </div>
+      <div class="cc-days">
+        <div class="cc-day">
+          <div class="cc-day__hdr">
+            <div class="cc-day__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+            <div><span class="cc-day__num">Day 1</span><h3 class="cc-day__title">Arrival &amp; Welcome BBQ</h3></div>
+          </div>
+          <ul>
+            <li>Private group transfer from airport</li>
+            <li>Villa check-in with welcome setup</li>
+            <li>Bachelor decoration &amp; champagne toast</li>
+            <li>Private rooftop BBQ - open bar</li>
+          </ul>
+        </div>
+        <div class="cc-day">
+          <div class="cc-day__hdr">
+            <div class="cc-day__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 17l3.5-9.5A2 2 0 018.4 6H18a2 2 0 011.9 2.6L17 17H3z"/></svg></div>
+            <div><span class="cc-day__num">Day 2</span><h3 class="cc-day__title">Yacht Day - Cholón &amp; Rosario</h3></div>
+          </div>
+          <ul>
+            <li>Pickup from villa to dock</li>
+            <li>Full day private yacht</li>
+            <li>Cholón beach bar anchoring</li>
+            <li>Rosario Islands snorkeling</li>
+            <li>Catered lunch &amp; open bar on board</li>
+          </ul>
+        </div>
+        <div class="cc-day">
+          <div class="cc-day__hdr">
+            <div class="cc-day__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/></svg></div>
+            <div><span class="cc-day__num">Day 3</span><h3 class="cc-day__title">Beach Club &amp; VIP Nightclub</h3></div>
+          </div>
+          <ul>
+            <li>Beach club day pass - full cabana</li>
+            <li>DJ pool bar &amp; water activities</li>
+            <li>Villa pre-party - private chef dinner</li>
+            <li>VIP entrance &amp; bottle service</li>
+          </ul>
+        </div>
+        <div class="cc-day">
+          <div class="cc-day__hdr">
+            <div class="cc-day__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            <div><span class="cc-day__num">Day 4</span><h3 class="cc-day__title">Old City Tour &amp; Farewell</h3></div>
+          </div>
+          <ul>
+            <li>Private VIP colonial city tour</li>
+            <li>Optional: ATV tour, golf, mud volcano</li>
+            <li>Gourmet farewell dinner at villa</li>
+            <li>Cigars &amp; premium spirits - rooftop</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="cc-wrap">
+      <span class="cc-label">Simple Process</span>
+      <div class="cc-divider"></div>
+      <h2>How to Book Your Bachelor Trip</h2>
+      <p style="max-width:500px;margin-top:0.75rem;">We handle every detail. Your only job is to show up.</p>
+      <div class="cc-steps">
+        <div class="cc-step">
+          <div class="cc-step__num">01</div>
+          <div class="cc-step__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+          <div class="cc-step__title">Contact Us</div>
+          <p>Reach out via WhatsApp or email with travel dates, group size, and budget. We respond within 2 hours.</p>
+        </div>
+        <div class="cc-step">
+          <div class="cc-step__num">02</div>
+          <div class="cc-step__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg></div>
+          <div class="cc-step__title">Custom Proposal</div>
+          <p>Your concierge sends a fully itemized quote with villa options, yacht selection, and activity schedule within 24 hours.</p>
+        </div>
+        <div class="cc-step">
+          <div class="cc-step__num">03</div>
+          <div class="cc-step__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+          <div class="cc-step__title">Confirm &amp; Deposit</div>
+          <p>Secure your dates with a 30% deposit. Villa and yacht availability confirmed immediately upon receipt.</p>
+        </div>
+        <div class="cc-step">
+          <div class="cc-step__num">04</div>
+          <div class="cc-step__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+          <div class="cc-step__title">Arrive &amp; Celebrate</div>
+          <p>Land in Cartagena. Your driver is waiting. Everything is set up. Your only agenda is the bachelor weekend.</p>
+        </div>
+      </div>
+      <p style="margin-top:1.75rem;font-size:0.78rem;color:var(--gold);display:flex;align-items:center;gap:0.5rem;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Book 2-3 months in advance. Top villas and 70ft+ yachts book fast for US holiday weekends, March-April, and December.
+      </p>
+    </div>
+  </section>
+
+  <div class="cc-cta">
+    <div class="cc-cta__inner cc-wrap--n" style="text-align:center;">
+      <span class="cc-label">Ready to Plan?</span>
+      <div class="cc-divider cc-divider--c"></div>
+      <h2>Your Crew. Your Weekend. <span class="cc-gold">Handled.</span></h2>
+      <p>Tell us your dates and group size. We build the itinerary around you - no generic packages.</p>
+      <div class="cc-cta__btns">
+        <a href="https://wa.me/573043328515" class="cc-btn cc-btn--s" target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.824L.057 23.882l6.244-1.438A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.816 9.816 0 01-5.003-1.368l-.36-.214-3.706.852.88-3.59-.235-.373A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+          <span>WhatsApp Us Now</span>
+        </a>
+        <a href="https://classycartagena.com/get-in-touch-with-us/" class="cc-btn"><span>Send an Enquiry</span></a>
+      </div>
+      <div class="cc-contacts">
+        <div class="cc-contact"><span class="cc-contact__lbl">USA Line</span><a href="tel:14437304428">+1 (443) 730-4428</a></div>
+        <div class="cc-contact"><span class="cc-contact__lbl">Colombia Line</span><a href="tel:573246854211">+57 (324) 685-4211</a></div>
+        <div class="cc-contact"><span class="cc-contact__lbl">Email</span><a href="mailto:reservations@classycartagena.com" style="font-size:0.82rem;">reservations@classycartagena.com</a></div>
+      </div>
+    </div>
+  </div>
+</div>
