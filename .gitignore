@@ -15,6 +15,12 @@ src/public/storage
 # Docker local state
 docker/mysql/data/
 
+# Claude Code local files
+.claude/
+
+# Archivos no relacionados
+wordpress-recent-blog-posts-shortcode.php
+
 # Windows / editors
 Thumbs.db
 .DS_Store
