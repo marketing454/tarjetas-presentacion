@@ -46,8 +46,9 @@
             gap: .3rem;
         }
         .sidebar-brand img {
-            height: 38px;
-            width: auto;
+            width: 100%;
+            max-width: 155px;
+            height: auto;
             object-fit: contain;
             filter: brightness(0) invert(1);
         }
@@ -257,7 +258,7 @@
 {{-- Sidebar --}}
 <nav id="sidebar">
     <div class="sidebar-brand">
-        <img src="{{ asset('Logo-compulago-corporativo.png') }}" alt="COMPULAGO">
+        <img src="{{ asset('Logo-Compulago-white.png') }}" alt="COMPULAGO">
         <small>Team Presentation</small>
     </div>
 
