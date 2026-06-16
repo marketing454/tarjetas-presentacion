@@ -134,11 +134,11 @@
     </div>
 </div>
 
-<div class="row g-4 mb-4">
+<div class="row g-4 mb-4 align-items-start">
 
     {{-- Top Empleados --}}
     <div class="col-lg-5">
-        <div class="chart-card h-100">
+        <div class="chart-card">
             <div class="card-header d-flex align-items-center gap-2">
                 <i class="fas fa-trophy text-warning"></i>
                 Top empleados ({{ $days }}d)
@@ -175,42 +175,46 @@
         </div>
     </div>
 
-    {{-- Dispositivos --}}
-    <div class="col-lg-3">
-        <div class="chart-card h-100">
-            <div class="card-header d-flex align-items-center gap-2">
-                <i class="fas fa-mobile-screen text-primary"></i>
-                Dispositivos
-            </div>
-            <div class="card-body">
-                <div style="height:160px;" class="mb-3">
-                    <canvas id="deviceChart"></canvas>
+    {{-- Dispositivos + OS apilados --}}
+    <div class="col-lg-7">
+        <div class="row g-4">
+
+        {{-- Dispositivos --}}
+        <div class="col-sm-6">
+            <div class="chart-card">
+                <div class="card-header d-flex align-items-center gap-2">
+                    <i class="fas fa-mobile-screen text-primary"></i>
+                    Dispositivos
                 </div>
-                @php
-                    $deviceTotal  = $byDevice->sum();
-                    $deviceIcons  = ['mobile' => 'fa-mobile-screen', 'tablet' => 'fa-tablet-screen-button', 'desktop' => 'fa-desktop'];
-                    $deviceLabels = ['mobile' => 'Móvil', 'tablet' => 'Tablet', 'desktop' => 'PC'];
-                @endphp
-                @foreach($byDevice as $type => $count)
-                <div class="d-flex align-items-center gap-2 mb-2">
-                    <i class="fas {{ $deviceIcons[$type] ?? 'fa-question' }} text-muted" style="width:16px;text-align:center;font-size:.8rem;"></i>
-                    <span class="bar-label">{{ $deviceLabels[$type] ?? $type }}</span>
-                    <div class="bar-track">
-                        <div class="bar-fill" style="width:{{ $deviceTotal > 0 ? round($count / $deviceTotal * 100) : 0 }}%"></div>
+                <div class="card-body">
+                    <div style="height:150px;" class="mb-3">
+                        <canvas id="deviceChart"></canvas>
                     </div>
-                    <span class="bar-value">{{ $count }}</span>
+                    @php
+                        $deviceTotal  = $byDevice->sum();
+                        $deviceIcons  = ['mobile' => 'fa-mobile-screen', 'tablet' => 'fa-tablet-screen-button', 'desktop' => 'fa-desktop'];
+                        $deviceLabels = ['mobile' => 'Móvil', 'tablet' => 'Tablet', 'desktop' => 'PC'];
+                    @endphp
+                    @foreach($byDevice as $type => $count)
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <i class="fas {{ $deviceIcons[$type] ?? 'fa-question' }} text-muted" style="width:16px;text-align:center;font-size:.8rem;"></i>
+                        <span class="bar-label">{{ $deviceLabels[$type] ?? $type }}</span>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width:{{ $deviceTotal > 0 ? round($count / $deviceTotal * 100) : 0 }}%"></div>
+                        </div>
+                        <span class="bar-value">{{ $count }}</span>
+                    </div>
+                    @endforeach
+                    @if($byDevice->isEmpty())
+                        <p class="text-muted small text-center mb-0">Sin datos</p>
+                    @endif
                 </div>
-                @endforeach
-                @if($byDevice->isEmpty())
-                    <p class="text-muted small text-center mb-0">Sin datos</p>
-                @endif
             </div>
         </div>
-    </div>
 
-    {{-- OS --}}
-    <div class="col-lg-4">
-        <div class="chart-card h-100">
+        {{-- OS --}}
+        <div class="col-sm-6">
+        <div class="chart-card">
             <div class="card-header d-flex align-items-center gap-2">
                 <i class="fas fa-laptop text-primary"></i>
                 Sistema Operativo
@@ -230,8 +234,11 @@
                 @endforelse
             </div>
         </div>
-    </div>
-</div>
+        </div>{{-- /col-sm-6 OS --}}
+
+        </div>{{-- /row nested --}}
+    </div>{{-- /col-lg-7 --}}
+</div>{{-- /row align-items-start --}}
 
 <div class="row g-4 mb-4">
 
