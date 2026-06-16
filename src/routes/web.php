@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\Admin\CardTypeBannerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\MetricsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CardController;
 use Illuminate\Support\Facades\Auth;
@@ -39,4 +40,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     // Banners predeterminados
     Route::get('card-banners', [CardTypeBannerController::class, 'index'])->name('card-banners.index');
     Route::post('card-banners', [CardTypeBannerController::class, 'update'])->name('card-banners.update');
+
+    // Métricas
+    Route::get('metrics', [MetricsController::class, 'index'])->name('metrics');
 });

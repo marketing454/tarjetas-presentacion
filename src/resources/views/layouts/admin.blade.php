@@ -282,6 +282,12 @@
            class="nav-link {{ request()->routeIs('admin.card-banners.*') ? 'active' : '' }}">
             <i class="fas fa-image"></i> Banners
         </a>
+
+        <div class="sidebar-section">Análisis</div>
+        <a href="{{ route('admin.metrics') }}"
+           class="nav-link {{ request()->routeIs('admin.metrics') ? 'active' : '' }}">
+            <i class="fas fa-chart-line"></i> Métricas
+        </a>
     </div>
 
     <div class="sidebar-footer">
