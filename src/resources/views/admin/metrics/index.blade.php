@@ -177,7 +177,7 @@
 
     {{-- Dispositivos + OS apilados --}}
     <div class="col-lg-7">
-        <div class="row g-4">
+        <div class="row g-4 align-items-start">
 
         {{-- Dispositivos --}}
         <div class="col-sm-6">
@@ -240,11 +240,11 @@
     </div>{{-- /col-lg-7 --}}
 </div>{{-- /row align-items-start --}}
 
-<div class="row g-4 mb-4">
+<div class="row g-4 mb-4 align-items-start">
 
     {{-- Ciudades --}}
     <div class="col-lg-6">
-        <div class="chart-card h-100">
+        <div class="chart-card">
             <div class="card-header d-flex align-items-center gap-2">
                 <i class="fas fa-location-dot text-danger"></i>
                 Top ciudades ({{ $days }}d)
@@ -274,7 +274,7 @@
 
     {{-- Navegador y País --}}
     <div class="col-lg-6">
-        <div class="row g-4 h-100">
+        <div class="row g-4">
             <div class="col-12">
                 <div class="chart-card">
                     <div class="card-header d-flex align-items-center gap-2">
