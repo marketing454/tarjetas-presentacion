@@ -6,12 +6,14 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\MetricsController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BranchCardController;
 use App\Http\Controllers\CardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // Tarjeta pública (sin auth)
 Route::get('/card/{slug}', [CardController::class, 'show'])->name('card.show');
+Route::get('/sede/{slug}', [BranchCardController::class, 'show'])->name('branch.show');
 
 // Auth
 Route::get('/login', function () {

@@ -103,7 +103,12 @@ class Employee extends Model
 
     public function getCardThemeAttribute(): array
     {
-        return match ($this->card_type) {
+        return static::themeFor($this->card_type);
+    }
+
+    public static function themeFor(?string $cardType): array
+    {
+        return match ($cardType) {
             self::CARD_TYPE_CREDIT => [
                 'page_start' => '#07182E',
                 'page_mid' => '#075985',
