@@ -59,6 +59,14 @@
                         </td>
                         <td class="pe-4 text-end">
                             <div class="d-flex gap-1 justify-content-end">
+                                <a href="{{ route('branch.show', $branch->slug) }}" target="_blank"
+                                   class="btn btn-sm btn-outline-secondary" title="Ver tarjeta pública">
+                                    <i class="fas fa-arrow-up-right-from-square fa-sm"></i>
+                                </a>
+                                <button onclick="showBranchQr({{ $branch->id }}, '{{ addslashes($branch->name) }}', '{{ route('admin.branches.qr', $branch) }}', '{{ route('branch.show', $branch->slug) }}')"
+                                        class="btn btn-sm btn-outline-primary" title="Ver / Descargar QR">
+                                    <i class="fas fa-qrcode fa-sm"></i>
+                                </button>
                                 <a href="{{ route('admin.branches.edit', $branch) }}"
                                    class="btn btn-sm btn-outline-secondary" title="Editar">
                                     <i class="fas fa-pen fa-sm"></i>

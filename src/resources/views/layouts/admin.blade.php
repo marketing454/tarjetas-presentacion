@@ -385,6 +385,23 @@ function showQr(employeeId, employeeName, downloadUrl, cardUrl) {
         });
 }
 
+function showBranchQr(branchId, branchName, downloadUrl, cardUrl) {
+    document.getElementById('qrEmployeeName').textContent = branchName;
+    document.getElementById('qrDownloadBtn').href = downloadUrl;
+    document.getElementById('qrCardBtn').href = cardUrl;
+    document.getElementById('qrContainer').innerHTML = '<div class="spinner-border text-primary" role="status"></div>';
+
+    const modal = new bootstrap.Modal(document.getElementById('qrModal'));
+    modal.show();
+
+    fetch(`/admin/branches/${branchId}/qr-preview`)
+        .then(r => r.text())
+        .then(svg => {
+            document.getElementById('qrContainer').innerHTML = svg;
+            document.getElementById('qrContainer').querySelector('svg').setAttribute('id', 'qrPreview');
+        });
+}
+
 // Cerrar sidebar al hacer click fuera (móvil)
 document.addEventListener('click', function(e) {
     const sidebar = document.getElementById('sidebar');

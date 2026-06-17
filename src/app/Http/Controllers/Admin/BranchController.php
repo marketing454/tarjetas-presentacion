@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class BranchController extends Controller
 {
@@ -69,5 +70,24 @@ class BranchController extends Controller
         $branch->delete();
         return redirect()->route('admin.branches.index')
             ->with('success', 'Sucursal eliminada correctamente.');
+    }
+
+    public function downloadQr(Branch $branch)
+    {
+        $url = route('branch.show', $branch->slug);
+        $png = QrCode::format('png')->size(500)->margin(2)->generate($url);
+
+        return response($png, 200, [
+            'Content-Type'        => 'image/png',
+            'Content-Disposition' => 'attachment; filename="qr-sede-' . $branch->slug . '.png"',
+        ]);
+    }
+
+    public function qrPreview(Branch $branch)
+    {
+        $url = route('branch.show', $branch->slug);
+        $svg = QrCode::size(200)->generate($url);
+
+        return response($svg, 200, ['Content-Type' => 'image/svg+xml']);
     }
 }

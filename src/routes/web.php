@@ -33,6 +33,8 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
 
     // Sucursales
     Route::resource('branches', BranchController::class);
+    Route::get('branches/{branch}/qr', [BranchController::class, 'downloadQr'])->name('branches.qr');
+    Route::get('branches/{branch}/qr-preview', [BranchController::class, 'qrPreview'])->name('branches.qr-preview');
 
     // Empleados
     Route::resource('employees', EmployeeController::class);
