@@ -241,6 +241,47 @@
 </div>{{-- /row align-items-start --}}
 
 <div class="row g-4 mb-4 align-items-start">
+    {{-- Top Sedes --}}
+    <div class="col-lg-5">
+        <div class="chart-card">
+            <div class="card-header d-flex align-items-center gap-2">
+                <i class="fas fa-building text-success"></i>
+                Top sedes ({{ $days }}d)
+            </div>
+            <div class="card-body p-0">
+                @forelse($topBranches as $i => $row)
+                    @php $branchRow = $row->branch; @endphp
+                    @if($branchRow)
+                    <div class="d-flex align-items-center gap-3 px-4 py-2 {{ !$loop->last ? 'border-bottom' : '' }}">
+                        <div class="rank-badge"
+                             style="background:{{ $i === 0 ? '#fef3c7' : ($i === 1 ? '#f1f5f9' : '#fef3c7') }};
+                                    color:{{ $i === 0 ? '#92400e' : '#475569' }};">
+                            {{ $i + 1 }}
+                        </div>
+                        <div class="flex-grow-1" style="min-width:0;">
+                            <div class="fw-semibold text-dark" style="font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                                {{ $branchRow->name }}
+                            </div>
+                            <div class="text-muted" style="font-size:.72rem;">{{ $branchRow->city }}</div>
+                        </div>
+                        <div class="text-end">
+                            <div class="fw-bold" style="font-size:.95rem;color:#8dc63f;">{{ $row->total }}</div>
+                            <div class="text-muted" style="font-size:.68rem;">escaneos</div>
+                        </div>
+                    </div>
+                    @endif
+                @empty
+                    <div class="text-center py-5 text-muted">
+                        <i class="fas fa-building fa-2x mb-2 opacity-25"></i>
+                        <p class="small mb-0">Sin datos en este período</p>
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4 align-items-start">
 
     {{-- Ciudades --}}
     <div class="col-lg-6">
@@ -345,7 +386,7 @@
                 <table class="table mb-0">
                     <thead>
                         <tr>
-                            <th class="ps-4">Empleado</th>
+                            <th class="ps-4">Empleado / Sede</th>
                             <th>Dispositivo</th>
                             <th>OS / Browser</th>
                             <th>Ciudad</th>
@@ -362,6 +403,12 @@
                                         {{ $scan->employee->name }}
                                     </a>
                                     <div class="text-muted" style="font-size:.7rem;">{{ $scan->employee->position }}</div>
+                                @elseif($scan->branch)
+                                    <a href="{{ route('branch.show', $scan->branch->slug) }}" target="_blank"
+                                       class="text-decoration-none fw-semibold text-dark" style="font-size:.82rem;">
+                                        <i class="fas fa-building me-1 text-muted"></i>{{ $scan->branch->name }}
+                                    </a>
+                                    <div class="text-muted" style="font-size:.7rem;">Sede · {{ $scan->branch->city }}</div>
                                 @else
                                     <span class="text-muted">—</span>
                                 @endif

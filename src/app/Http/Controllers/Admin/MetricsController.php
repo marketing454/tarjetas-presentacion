@@ -26,7 +26,19 @@ class MetricsController extends Controller
             ->select('employee_id', DB::raw('COUNT(*) as total'))
             ->with('employee:id,name,position,photo,slug')
             ->where('created_at', '>=', $from)
+            ->whereNotNull('employee_id')
             ->groupBy('employee_id')
+            ->orderByDesc('total')
+            ->limit(10)
+            ->get();
+
+        // Top sedes en el período
+        $topBranches = CardScan::query()
+            ->select('branch_id', DB::raw('COUNT(*) as total'))
+            ->with('branch:id,name,city,slug')
+            ->where('created_at', '>=', $from)
+            ->whereNotNull('branch_id')
+            ->groupBy('branch_id')
             ->orderByDesc('total')
             ->limit(10)
             ->get();
@@ -101,14 +113,14 @@ class MetricsController extends Controller
 
         // Escaneos recientes
         $recentScans = CardScan::query()
-            ->with('employee:id,name,position,slug')
+            ->with(['employee:id,name,position,slug', 'branch:id,name,city,slug'])
             ->orderByDesc('created_at')
             ->limit(20)
             ->get();
 
         return view('admin.metrics.index', compact(
             'days', 'totalScans', 'scansToday', 'scansWeek', 'scansMonth',
-            'topEmployees', 'byDevice', 'byOs', 'byBrowser',
+            'topEmployees', 'topBranches', 'byDevice', 'byOs', 'byBrowser',
             'byCity', 'byCountry', 'timeline', 'recentScans'
         ));
     }
