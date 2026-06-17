@@ -41,7 +41,9 @@ class MetricsController extends Controller
             ->groupBy('branch_id')
             ->orderByDesc('total')
             ->limit(10)
-            ->get();
+            ->get()
+            ->filter(fn ($row) => $row->branch !== null)
+            ->values();
 
         // Por dispositivo
         $byDevice = CardScan::query()
