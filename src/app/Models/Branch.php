@@ -4,12 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Branch extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'city', 'address', 'maps_url', 'phone'];
+    protected $fillable = ['name', 'city', 'address', 'maps_url', 'phone', 'slug'];
+
+    public static function generateSlug(string $name): string
+    {
+        $base = Str::slug($name);
+        $slug = $base;
+        $i = 1;
+
+        while (static::where('slug', $slug)->exists()) {
+            $slug = "{$base}-{$i}";
+            $i++;
+        }
+
+        return $slug;
+    }
 
     public function employees()
     {

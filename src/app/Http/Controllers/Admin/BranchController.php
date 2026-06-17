@@ -29,6 +29,7 @@ class BranchController extends Controller
             'phone'   => 'nullable|string|max:50',
         ]);
 
+        $data['slug'] = Branch::generateSlug($data['name']);
         Branch::create($data);
 
         return redirect()->route('admin.branches.index')
