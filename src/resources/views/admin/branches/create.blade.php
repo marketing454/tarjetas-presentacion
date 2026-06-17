@@ -39,6 +39,22 @@
                         <input type="hidden" name="photo_position_y" id="photo_position_y" value="50">
                     </div>
 
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Fotos de la sede (URLs externas)</label>
+                        <div id="photoUrlRows">
+                            <div class="d-flex gap-2 mb-2">
+                                <input type="url" name="photos[]" class="form-control" placeholder="https://...">
+                                <button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">×</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="addPhotoUrlRow()">
+                            <i class="fas fa-plus me-1"></i> Agregar foto
+                        </button>
+                        <div class="form-text">
+                            Pega el link directo de cada foto (alojada en otro servicio). El orden de la lista es el orden del carrusel.
+                        </div>
+                    </div>
+
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Nombre de la sucursal <span class="text-danger">*</span></label>
                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
@@ -159,6 +175,14 @@ function setupSedePhotoDrag() {
     window.addEventListener('touchend', end);
 }
 document.addEventListener('DOMContentLoaded', setupSedePhotoDrag);
+
+function addPhotoUrlRow() {
+    const container = document.getElementById('photoUrlRows');
+    const row = document.createElement('div');
+    row.className = 'd-flex gap-2 mb-2';
+    row.innerHTML = '<input type="url" name="photos[]" class="form-control" placeholder="https://..."><button type="button" class="btn btn-outline-danger" onclick="this.parentElement.remove()">×</button>';
+    container.appendChild(row);
+}
 </script>
 @endpush
 @endsection

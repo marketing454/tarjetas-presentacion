@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
+use App\Models\BranchPhoto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -32,6 +33,8 @@ class BranchController extends Controller
             'photo'   => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'photo_position_x' => 'nullable|integer|min:0|max:100',
             'photo_position_y' => 'nullable|integer|min:0|max:100',
+            'photos' => 'nullable|array',
+            'photos.*' => 'nullable|url|max:1000',
         ]);
 
         $data['slug'] = Branch::generateSlug($data['name']);
@@ -42,7 +45,14 @@ class BranchController extends Controller
             $data['photo'] = $request->file('photo')->store('branches', 'public');
         }
 
-        Branch::create($data);
+        $photos = array_values(array_filter($data['photos'] ?? [], fn ($url) => filled($url)));
+        unset($data['photos']);
+
+        $branch = Branch::create($data);
+
+        foreach ($photos as $i => $url) {
+            BranchPhoto::create(['branch_id' => $branch->id, 'url' => $url, 'position' => $i]);
+        }
 
         return redirect()->route('admin.branches.index')
             ->with('success', 'Sucursal creada correctamente.');
@@ -71,6 +81,8 @@ class BranchController extends Controller
             'photo'   => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'photo_position_x' => 'nullable|integer|min:0|max:100',
             'photo_position_y' => 'nullable|integer|min:0|max:100',
+            'photos' => 'nullable|array',
+            'photos.*' => 'nullable|url|max:1000',
         ]);
 
         if ($request->hasFile('photo')) {
@@ -85,7 +97,15 @@ class BranchController extends Controller
             $data['photo'] = null;
         }
 
+        $photos = array_values(array_filter($data['photos'] ?? [], fn ($url) => filled($url)));
+        unset($data['photos']);
+
         $branch->update($data);
+
+        $branch->photos()->delete();
+        foreach ($photos as $i => $url) {
+            BranchPhoto::create(['branch_id' => $branch->id, 'url' => $url, 'position' => $i]);
+        }
 
         return redirect()->route('admin.branches.index')
             ->with('success', 'Sucursal actualizada correctamente.');

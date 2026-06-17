@@ -26,6 +26,17 @@
         .advisor-whatsapp { width: 38px; height: 38px; border-radius: 10px; background: #dcfce7; color: #16a34a; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.05rem; text-decoration: none; }
         .advisor-whatsapp:hover { background: #bbf7d0; }
         .advisor-empty { text-align: center; padding: 2rem 1rem; color: #94a3b8; font-size: .85rem; }
+        @if($branch->photos->isNotEmpty())
+        .sede-carousel { position: relative; margin-bottom: 1.5rem; border-radius: 14px; overflow: hidden; }
+        .sede-carousel-track { position: relative; height: 200px; background: #f1f5f9; }
+        .sede-carousel-slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .sede-carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; background: rgba(15,23,42,.55); color: #fff; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .sede-carousel-arrow.prev { left: .5rem; }
+        .sede-carousel-arrow.next { right: .5rem; }
+        .sede-carousel-dots { display: flex; justify-content: center; gap: .4rem; padding: .6rem 0; background: #f8fafc; }
+        .sede-carousel-dot { width: 7px; height: 7px; border-radius: 50%; background: #cbd5e1; border: none; cursor: pointer; padding: 0; }
+        .sede-carousel-dot.active { background: var(--accent); }
+        @endif
     </style>
 </head>
 <body>
@@ -86,6 +97,27 @@
                 @endforelse
             </div>
 
+            @if($branch->photos->isNotEmpty())
+                <div class="divider"></div>
+
+                <div class="sede-carousel">
+                    <div class="sede-carousel-track">
+                        @foreach($branch->photos as $i => $photo)
+                            <img src="{{ $photo->url }}" class="sede-carousel-slide" style="display: {{ $i === 0 ? 'block' : 'none' }};" alt="{{ $branch->name }}">
+                        @endforeach
+                    </div>
+                    @if($branch->photos->count() > 1)
+                        <button type="button" class="sede-carousel-arrow prev">&lsaquo;</button>
+                        <button type="button" class="sede-carousel-arrow next">&rsaquo;</button>
+                        <div class="sede-carousel-dots">
+                            @foreach($branch->photos as $i => $photo)
+                                <button type="button" class="sede-carousel-dot {{ $i === 0 ? 'active' : '' }}"></button>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+            @endif
+
             <div class="divider"></div>
 
             <div class="contact-grid">
@@ -126,5 +158,30 @@
 
     </div>
 </div>
+@if($branch->photos->isNotEmpty())
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const track = document.querySelector('.sede-carousel-track');
+    if (!track) return;
+    const slides = track.querySelectorAll('.sede-carousel-slide');
+    const dots = document.querySelectorAll('.sede-carousel-dot');
+    let current = 0;
+
+    function show(index) {
+        slides.forEach((s, i) => s.style.display = i === index ? 'block' : 'none');
+        dots.forEach((d, i) => d.classList.toggle('active', i === index));
+        current = index;
+    }
+
+    document.querySelector('.sede-carousel-arrow.prev')?.addEventListener('click', () => {
+        show((current - 1 + slides.length) % slides.length);
+    });
+    document.querySelector('.sede-carousel-arrow.next')?.addEventListener('click', () => {
+        show((current + 1) % slides.length);
+    });
+    dots.forEach((d, i) => d.addEventListener('click', () => show(i)));
+});
+</script>
+@endif
 </body>
 </html>

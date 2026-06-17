@@ -42,6 +42,11 @@ class Branch extends Model
         return $this->hasMany(Employee::class);
     }
 
+    public function photos()
+    {
+        return $this->hasMany(BranchPhoto::class)->orderBy('position');
+    }
+
     public function getMapsLinkAttribute(): string
     {
         if ($this->maps_url) {
