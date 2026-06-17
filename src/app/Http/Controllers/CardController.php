@@ -18,7 +18,7 @@ class CardController extends Controller
         $referrer   = $request->header('referer');
 
         defer(function () use ($employeeId, $ip, $ua, $referrer) {
-            CardScan::record($employeeId, $ip, $ua, $referrer);
+            CardScan::recordForEmployee($employeeId, $ip, $ua, $referrer);
         });
 
         return view('card.show', compact('employee'));

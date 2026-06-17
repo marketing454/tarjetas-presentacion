@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class CardScan extends Model
 {
     protected $fillable = [
-        'employee_id', 'ip_address', 'user_agent',
+        'employee_id', 'branch_id', 'ip_address', 'user_agent',
         'device_type', 'os', 'browser',
         'country', 'city', 'referrer',
     ];
@@ -19,7 +19,22 @@ class CardScan extends Model
         return $this->belongsTo(Employee::class);
     }
 
-    public static function record(int $employeeId, string $ip, ?string $ua, ?string $referrer): void
+    public function branch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class);
+    }
+
+    public static function recordForEmployee(int $employeeId, string $ip, ?string $ua, ?string $referrer): void
+    {
+        static::recordScan(['employee_id' => $employeeId], $ip, $ua, $referrer);
+    }
+
+    public static function recordForBranch(int $branchId, string $ip, ?string $ua, ?string $referrer): void
+    {
+        static::recordScan(['branch_id' => $branchId], $ip, $ua, $referrer);
+    }
+
+    private static function recordScan(array $subject, string $ip, ?string $ua, ?string $referrer): void
     {
         $parser = new UserAgentParser($ua ?? '');
 
@@ -29,8 +44,7 @@ class CardScan extends Model
 
         $geo = static::geoLookup($ip);
 
-        static::create([
-            'employee_id' => $employeeId,
+        static::create(array_merge($subject, [
             'ip_address'  => $ip,
             'user_agent'  => $ua,
             'device_type' => $parser->deviceType(),
@@ -39,7 +53,7 @@ class CardScan extends Model
             'country'     => $geo['country'] ?? null,
             'city'        => $geo['city'] ?? null,
             'referrer'    => $referrer ? substr($referrer, 0, 500) : null,
-        ]);
+        ]));
     }
 
     private static function geoLookup(string $ip): array
