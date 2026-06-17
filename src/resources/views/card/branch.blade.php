@@ -37,7 +37,12 @@
             <div class="avatar-wrap">
                 <div class="avatar-ring">
                     <div class="avatar-inner">
-                        <i class="fas fa-building"></i>
+                        @if($branch->photo_url)
+                            <img src="{{ $branch->photo_url }}" alt="{{ $branch->name }}"
+                                 style="object-position: {{ $branch->photo_position_x }}% {{ $branch->photo_position_y }}%;">
+                        @else
+                            <i class="fas fa-building"></i>
+                        @endif
                     </div>
                 </div>
             </div>

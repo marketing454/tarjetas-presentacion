@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class BranchController extends Controller
@@ -28,9 +29,19 @@ class BranchController extends Controller
             'address' => 'nullable|string|max:500',
             'maps_url' => 'nullable|url|max:1000',
             'phone'   => 'nullable|string|max:50',
+            'photo'   => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'photo_position_x' => 'nullable|integer|min:0|max:100',
+            'photo_position_y' => 'nullable|integer|min:0|max:100',
         ]);
 
         $data['slug'] = Branch::generateSlug($data['name']);
+        $data['photo_position_x'] = $data['photo_position_x'] ?? 50;
+        $data['photo_position_y'] = $data['photo_position_y'] ?? 50;
+
+        if ($request->hasFile('photo')) {
+            $data['photo'] = $request->file('photo')->store('branches', 'public');
+        }
+
         Branch::create($data);
 
         return redirect()->route('admin.branches.index')
@@ -57,7 +68,22 @@ class BranchController extends Controller
             'address' => 'nullable|string|max:500',
             'maps_url' => 'nullable|url|max:1000',
             'phone'   => 'nullable|string|max:50',
+            'photo'   => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'photo_position_x' => 'nullable|integer|min:0|max:100',
+            'photo_position_y' => 'nullable|integer|min:0|max:100',
         ]);
+
+        if ($request->hasFile('photo')) {
+            if ($branch->photo) {
+                Storage::disk('public')->delete($branch->photo);
+            }
+            $data['photo'] = $request->file('photo')->store('branches', 'public');
+        }
+
+        if ($request->boolean('remove_photo') && $branch->photo) {
+            Storage::disk('public')->delete($branch->photo);
+            $data['photo'] = null;
+        }
 
         $branch->update($data);
 

@@ -10,7 +10,10 @@ class Branch extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'city', 'address', 'maps_url', 'phone', 'slug'];
+    protected $fillable = [
+        'name', 'city', 'address', 'maps_url', 'phone', 'slug',
+        'photo', 'photo_position_x', 'photo_position_y',
+    ];
 
     public static function generateSlug(string $name): string
     {
@@ -24,6 +27,14 @@ class Branch extends Model
         }
 
         return $slug;
+    }
+
+    public function getPhotoUrlAttribute(): string
+    {
+        if ($this->photo && \Storage::disk('public')->exists($this->photo)) {
+            return asset('storage/' . $this->photo);
+        }
+        return '';
     }
 
     public function employees()

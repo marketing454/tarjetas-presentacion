@@ -16,8 +16,35 @@
 
         <div class="card content-card">
             <div class="card-body p-4">
-                <form action="{{ route('admin.branches.update', $branch) }}" method="POST">
+                <form action="{{ route('admin.branches.update', $branch) }}" method="POST" enctype="multipart/form-data">
                     @csrf @method('PUT')
+
+                    <div class="text-center mb-4">
+                        <div id="sedePhotoPreview" class="avatar avatar-lg mx-auto mb-2"
+                             style="width:120px;height:120px;font-size:1.5rem;cursor:grab;
+                                    {{ $branch->photo_url ? "background-image:url('{$branch->photo_url}');background-size:cover;background-position:{$branch->photo_position_x}% {$branch->photo_position_y}%;" : 'background:#dcfce7;color:#16a34a;' }}"
+                             onclick="document.getElementById('sedePhoto').click()">
+                            @if(!$branch->photo_url)
+                                <i class="fas fa-building"></i>
+                            @endif
+                        </div>
+                        <div class="text-muted" style="font-size:.8rem;">
+                            <a href="#" onclick="document.getElementById('sedePhoto').click();return false;">
+                                {{ $branch->photo_url ? 'Cambiar foto' : 'Subir foto de la sede' }}
+                            </a>
+                            @if($branch->photo)
+                                · <a href="#" onclick="removeSedePhoto();return false;" class="text-danger">Quitar foto</a>
+                            @endif
+                        </div>
+                        <div class="text-muted" style="font-size:.72rem;">
+                            Arrastra la foto dentro del circulo para elegir el encuadre.
+                        </div>
+                        <input type="file" id="sedePhoto" name="photo" accept="image/*" class="d-none"
+                               onchange="previewSedePhoto(this)">
+                        <input type="hidden" name="photo_position_x" id="photo_position_x" value="{{ $branch->photo_position_x }}">
+                        <input type="hidden" name="photo_position_y" id="photo_position_y" value="{{ $branch->photo_position_y }}">
+                        <input type="hidden" name="remove_photo" id="remove_photo" value="0">
+                    </div>
 
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Nombre <span class="text-danger">*</span></label>
@@ -127,4 +154,81 @@
     </div>
 </div>
 
+@push('scripts')
+<script>
+function previewSedePhoto(input) {
+    if (!input.files || !input.files[0]) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const preview = document.getElementById('sedePhotoPreview');
+        preview.innerHTML = '';
+        preview.style.backgroundImage = `url('${e.target.result}')`;
+        preview.style.backgroundSize = 'cover';
+        preview.style.backgroundPosition = '50% 50%';
+        document.getElementById('photo_position_x').value = '50';
+        document.getElementById('photo_position_y').value = '50';
+        document.getElementById('remove_photo').value = '0';
+    };
+    reader.readAsDataURL(input.files[0]);
+}
+
+function removeSedePhoto() {
+    const preview = document.getElementById('sedePhotoPreview');
+    preview.style.backgroundImage = '';
+    preview.style.background = '#dcfce7';
+    preview.style.color = '#16a34a';
+    preview.innerHTML = '<i class="fas fa-building"></i>';
+    document.getElementById('sedePhoto').value = '';
+    document.getElementById('remove_photo').value = '1';
+}
+
+function setupSedePhotoDrag() {
+    const container = document.getElementById('sedePhotoPreview');
+    const xInput = document.getElementById('photo_position_x');
+    const yInput = document.getElementById('photo_position_y');
+    let dragging = false;
+    let startX = 0, startY = 0;
+    let posX = parseInt(xInput.value, 10);
+    let posY = parseInt(yInput.value, 10);
+
+    function clamp(v) { return Math.max(0, Math.min(100, v)); }
+
+    function start(e) {
+        dragging = true;
+        const point = e.touches ? e.touches[0] : e;
+        startX = point.clientX;
+        startY = point.clientY;
+    }
+
+    function move(e) {
+        if (!dragging) return;
+        const point = e.touches ? e.touches[0] : e;
+        const dx = point.clientX - startX;
+        const dy = point.clientY - startY;
+        const rect = container.getBoundingClientRect();
+        posX = clamp(posX - (dx / rect.width) * 100);
+        posY = clamp(posY - (dy / rect.height) * 100);
+        container.style.backgroundPosition = `${posX}% ${posY}%`;
+        startX = point.clientX;
+        startY = point.clientY;
+        e.preventDefault();
+    }
+
+    function end() {
+        if (!dragging) return;
+        dragging = false;
+        xInput.value = Math.round(posX);
+        yInput.value = Math.round(posY);
+    }
+
+    container.addEventListener('mousedown', start);
+    container.addEventListener('touchstart', start, { passive: true });
+    window.addEventListener('mousemove', move);
+    window.addEventListener('touchmove', move, { passive: false });
+    window.addEventListener('mouseup', end);
+    window.addEventListener('touchend', end);
+}
+document.addEventListener('DOMContentLoaded', setupSedePhotoDrag);
+</script>
+@endpush
 @endsection
