@@ -1,6 +1,11 @@
 # Env files (credentials)
 **/.env
 
+# Despliegue: datos sensibles (NO subir a GitHub)
+deploy/.env.production.example
+deploy/*.sql
+src/database/data/
+
 # Laravel / src
 src/vendor/
 src/node_modules/

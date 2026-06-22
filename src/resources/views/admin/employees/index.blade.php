@@ -11,6 +11,19 @@
 
 @section('content')
 
+@if($noBranchCount > 0)
+    <div class="alert alert-warning d-flex align-items-center justify-content-between" role="alert">
+        <div>
+            <i class="fas fa-triangle-exclamation me-2"></i>
+            Hay <strong>{{ $noBranchCount }}</strong>
+            {{ $noBranchCount === 1 ? 'empleado sin sucursal asignada' : 'empleados sin sucursal asignada' }}.
+        </div>
+        <a href="{{ route('admin.employees.index', ['branch' => 'none']) }}" class="btn btn-sm btn-warning">
+            Ver empleados sin sucursal
+        </a>
+    </div>
+@endif
+
 {{-- Filtros --}}
 <div class="card content-card mb-4">
     <div class="card-body py-3 px-4">
@@ -25,6 +38,7 @@
             <div class="col-sm-4">
                 <select name="branch" class="form-select form-select-sm">
                     <option value="">Todas las sucursales</option>
+                    <option value="none" {{ request('branch') === 'none' ? 'selected' : '' }}>⚠ Sin sucursal</option>
                     @foreach($branches as $branch)
                         <option value="{{ $branch->id }}" {{ request('branch') == $branch->id ? 'selected' : '' }}>
                             {{ $branch->city }} — {{ $branch->name }}
@@ -95,10 +109,16 @@
                         </td>
                         <td class="text-muted" style="font-size:.85rem;">{{ $emp->position }}</td>
                         <td>
-                            <div style="font-size:.82rem;">{{ $emp->branch->name ?? '—' }}</div>
-                            <span class="badge badge-branch rounded-pill mt-1">
-                                <i class="fas fa-location-dot me-1"></i>{{ $emp->branch->city ?? '' }}
-                            </span>
+                            @if($emp->branch)
+                                <div style="font-size:.82rem;">{{ $emp->branch->name }}</div>
+                                <span class="badge badge-branch rounded-pill mt-1">
+                                    <i class="fas fa-location-dot me-1"></i>{{ $emp->branch->city }}
+                                </span>
+                            @else
+                                <span class="badge bg-danger rounded-pill">
+                                    <i class="fas fa-triangle-exclamation me-1"></i>Sin sucursal
+                                </span>
+                            @endif
                         </td>
                         <td>
                             <div class="d-flex gap-2 align-items-center">

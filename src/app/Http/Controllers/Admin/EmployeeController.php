@@ -17,7 +17,9 @@ class EmployeeController extends Controller
         $query = Employee::with('branch');
 
         if ($request->filled('branch')) {
-            $query->where('branch_id', $request->branch);
+            $request->branch === 'none'
+                ? $query->whereNull('branch_id')
+                : $query->where('branch_id', $request->branch);
         }
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
@@ -28,8 +30,9 @@ class EmployeeController extends Controller
 
         $employees = $query->orderBy('name')->get();
         $branches  = Branch::orderBy('city')->get();
+        $noBranchCount = Employee::whereNull('branch_id')->count();
 
-        return view('admin.employees.index', compact('employees', 'branches'));
+        return view('admin.employees.index', compact('employees', 'branches', 'noBranchCount'));
     }
 
     public function create()
@@ -131,6 +134,13 @@ class EmployeeController extends Controller
         $employee->delete();
         return redirect()->route('admin.employees.index')
             ->with('success', 'Empleado eliminado correctamente.');
+    }
+
+    public function detachBranch(Employee $employee)
+    {
+        $employee->update(['branch_id' => null]);
+
+        return back()->with('success', "{$employee->name} fue quitado de la sucursal (el empleado no se eliminó).");
     }
 
     public function downloadQr(Employee $employee)

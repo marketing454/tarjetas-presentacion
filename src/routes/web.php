@@ -38,6 +38,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
 
     // Empleados
     Route::resource('employees', EmployeeController::class);
+    Route::delete('employees/{employee}/branch', [EmployeeController::class, 'detachBranch'])->name('employees.detach-branch');
     Route::get('employees/{employee}/qr', [EmployeeController::class, 'downloadQr'])->name('employees.qr');
     Route::get('employees/{employee}/qr-preview', [EmployeeController::class, 'qrPreview'])->name('employees.qr-preview');
 

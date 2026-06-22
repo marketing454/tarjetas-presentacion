@@ -166,6 +166,14 @@
                                        class="btn btn-sm btn-outline-primary">
                                         <i class="fas fa-arrow-up-right-from-square fa-xs"></i>
                                     </a>
+                                    <form action="{{ route('admin.employees.detach-branch', $emp) }}" method="POST"
+                                          onsubmit="return confirm('¿Quitar a {{ addslashes($emp->name) }} de esta sucursal? El empleado NO se elimina, solo queda sin sucursal.')">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                title="Quitar de la sucursal (no elimina al empleado)">
+                                            <i class="fas fa-user-minus fa-xs"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </li>
