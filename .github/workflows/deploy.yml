@@ -18,6 +18,10 @@ jobs:
           php-version: '8.4'
           tools: composer:v2
 
+      - name: Prepare Laravel writable directories
+        working-directory: src
+        run: mkdir -p bootstrap/cache storage/framework/cache storage/framework/sessions storage/framework/views storage/logs
+
       - name: Install PHP dependencies
         working-directory: src
         run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
