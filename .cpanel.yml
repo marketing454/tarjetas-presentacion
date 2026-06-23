@@ -1,0 +1,39 @@
+---
+# Despliegue automatico para cPanel Git(TM) Version Control.
+#
+# cPanel clona este repo en ~/repositories/tarjetas-presentacion y ejecuta
+# las tareas de abajo cada vez que pulsas "Deploy HEAD Commit" (o tras un pull).
+#
+# IMPORTANTE: ajusta las DOS variables siguientes a tu cuenta real:
+#   APPPATH  = carpeta del proyecto Laravel en el servidor (FUERA de public_html)
+#   PHP      = binario PHP 8.4 CLI de tu hosting (ver nota al final)
+deployment:
+  tasks:
+    - export APPPATH=/home/compulag/laravel-tarjetas
+    - export PHP=/usr/local/bin/ea-php84
+
+    # 1) Copiar el codigo de src/ al directorio de la app (sin pisar .env ni datos del server)
+    - /bin/mkdir -p $APPPATH
+    - >-
+      /usr/bin/rsync -a --delete
+      --exclude='.env'
+      --exclude='storage/app'
+      --exclude='storage/framework/cache'
+      --exclude='storage/framework/sessions'
+      --exclude='storage/framework/views'
+      --exclude='storage/logs'
+      --exclude='bootstrap/cache'
+      src/ $APPPATH/
+
+    # 2) Asegurar directorios escribibles que git no versiona
+    - /bin/mkdir -p $APPPATH/bootstrap/cache $APPPATH/storage/framework/cache $APPPATH/storage/framework/sessions $APPPATH/storage/framework/views $APPPATH/storage/logs
+    - /bin/chmod -R 775 $APPPATH/storage $APPPATH/bootstrap/cache
+
+    # 3) Dependencias de produccion
+    - cd $APPPATH && /usr/local/bin/composer install --no-dev --optimize-autoloader --no-interaction
+
+    # 4) Cachear configuracion y enlazar storage
+    - cd $APPPATH && $PHP artisan config:cache
+    - cd $APPPATH && $PHP artisan route:cache
+    - cd $APPPATH && $PHP artisan view:cache
+    - cd $APPPATH && $PHP artisan storage:link || true

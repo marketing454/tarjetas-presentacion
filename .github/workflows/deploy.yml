@@ -1,8 +1,9 @@
 name: Deploy to cPanel
 
+# Deploy via SSH en desuso: el hosting restringe SSH entrante. El despliegue
+# real se hace con cPanel Git Version Control (.cpanel.yml). Se deja este
+# workflow solo en modo manual por si en el futuro se habilita SSH.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 jobs:
