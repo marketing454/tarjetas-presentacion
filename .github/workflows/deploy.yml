@@ -32,7 +32,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Trust host key
-        run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+        run: ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
 
       # .env, storage/app (fotos subidas), storage/framework/*, storage/logs y
       # bootstrap/cache se excluyen para no pisar configuracion ni datos que
@@ -40,7 +40,7 @@ jobs:
       - name: Sync files via rsync
         run: |
           rsync -avz --delete \
-            -e "ssh -p ${{ secrets.SSH_PORT }}" \
+            -e "ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=accept-new" \
             --exclude='.env' \
             --exclude='.git' \
             --exclude='.github' \
@@ -56,7 +56,7 @@ jobs:
 
       - name: Run post-deploy commands
         run: |
-          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} '
+          ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=accept-new ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} '
             cd ${{ secrets.DEPLOY_PATH }} &&
             php artisan config:cache &&
             php artisan route:cache &&
