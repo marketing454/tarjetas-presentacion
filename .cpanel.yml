@@ -1,41 +1,12 @@
 ---
-# Despliegue automatico para cPanel Git(TM) Version Control.
-#
-# cPanel clona este repo en ~/repositories/tarjetas-presentacion y ejecuta
-# las tareas de abajo cuando pulsas "Deploy HEAD Commit".
-#
-# La app queda en APPPATH y el Document Root del subdominio card.compulago.com
-# debe apuntar a  APPPATH/public  (asi el .env y el codigo no son publicos).
+# El repo se clona directamente en card.compulago.com (con .git en la raiz).
+# La app Laravel vive en  card.compulago.com/src/  y se sirve desde
+#   card.compulago.com/src/public   <-- ese es el Document Root del subdominio.
+# Como el clon YA es el codigo servido, no copiamos archivos: solo instalamos
+# dependencias y cacheamos dentro de src/. El .env debe estar en src/.env.
 deployment:
   tasks:
-    - export APPPATH=/home/compulag/card.compulago.com
-    - export PHP=/usr/local/bin/ea-php84
-    - export COMPOSER="$PHP $HOME/composer.phar"
-
-    # 1) Copiar el codigo de src/ a la app (sin pisar .env, vendor ni datos del server)
-    - /bin/mkdir -p $APPPATH
-    - >-
-      /usr/bin/rsync -a --delete
-      --exclude='.env'
-      --exclude='vendor'
-      --exclude='storage/app'
-      --exclude='storage/framework/cache'
-      --exclude='storage/framework/sessions'
-      --exclude='storage/framework/views'
-      --exclude='storage/logs'
-      --exclude='bootstrap/cache'
-      --exclude='public/storage'
-      src/ $APPPATH/
-
-    # 2) Directorios escribibles que git no versiona
-    - /bin/mkdir -p $APPPATH/bootstrap/cache $APPPATH/storage/framework/cache $APPPATH/storage/framework/sessions $APPPATH/storage/framework/views $APPPATH/storage/logs
-    - /bin/chmod -R 775 $APPPATH/storage $APPPATH/bootstrap/cache
-
-    # 3) Dependencias de produccion (requiere ~/composer.phar, ver guia)
-    - cd $APPPATH && $COMPOSER install --no-dev --optimize-autoloader --no-interaction
-
-    # 4) Cachear configuracion y enlazar storage
-    - cd $APPPATH && $PHP artisan config:cache
-    - cd $APPPATH && $PHP artisan route:cache
-    - cd $APPPATH && $PHP artisan view:cache
-    - cd $APPPATH && $PHP artisan storage:link || true
+    - cd src && /bin/mkdir -p bootstrap/cache storage/framework/cache storage/framework/sessions storage/framework/views storage/logs && /bin/chmod -R 775 storage bootstrap/cache
+    - cd src && /usr/local/bin/ea-php84 /home/compulag/composer.phar install --no-dev --optimize-autoloader --no-interaction
+    - cd src && /usr/local/bin/ea-php84 artisan config:cache && /usr/local/bin/ea-php84 artisan route:cache && /usr/local/bin/ea-php84 artisan view:cache
+    - cd src && /usr/local/bin/ea-php84 artisan storage:link || true
