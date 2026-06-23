@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\MetricsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BranchCardController;
 use App\Http\Controllers\CardController;
+use App\Http\Controllers\DirectoryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -22,10 +23,8 @@ Route::get('/login', function () {
 Route::post('/login', [LoginController::class, 'login'])->name('auth.login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('auth.logout');
 
-// Raíz → redirige
-Route::get('/', function () {
-    return redirect()->route(Auth::check() ? 'admin.dashboard' : 'login');
-});
+// Raíz → directorio público de sedes
+Route::get('/', [DirectoryController::class, 'index'])->name('directory');
 
 // Panel de administración (protegido)
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
