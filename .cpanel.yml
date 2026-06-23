@@ -7,6 +7,6 @@
 deployment:
   tasks:
     - cd src && /bin/mkdir -p bootstrap/cache storage/framework/cache storage/framework/sessions storage/framework/views storage/logs && /bin/chmod -R 775 storage bootstrap/cache
-    - cd src && /usr/local/bin/ea-php84 /home/compulag/composer.phar install --no-dev --optimize-autoloader --no-interaction
+    - cd src && /usr/local/bin/ea-php84 -d disable_functions= /home/compulag/composer.phar install --no-dev --optimize-autoloader --no-interaction
     - cd src && /usr/local/bin/ea-php84 artisan config:cache && /usr/local/bin/ea-php84 artisan route:cache && /usr/local/bin/ea-php84 artisan view:cache
     - cd src && /usr/local/bin/ea-php84 artisan storage:link || true
