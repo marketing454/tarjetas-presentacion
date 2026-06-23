@@ -146,11 +146,11 @@ class EmployeeController extends Controller
     public function downloadQr(Employee $employee)
     {
         $url = route('card.show', $employee->slug);
-        $png = QrCode::format('png')->size(500)->margin(2)->generate($url);
+        $svg = QrCode::format('svg')->size(500)->margin(2)->generate($url);
 
-        return response($png, 200, [
-            'Content-Type'        => 'image/png',
-            'Content-Disposition' => 'attachment; filename="qr-' . $employee->slug . '.png"',
+        return response($svg, 200, [
+            'Content-Type'        => 'image/svg+xml',
+            'Content-Disposition' => 'attachment; filename="qr-' . $employee->slug . '.svg"',
         ]);
     }
 
